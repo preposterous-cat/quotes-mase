@@ -3,8 +3,6 @@ import ChatBubble from "./chat-buble";
 import { motion } from "framer-motion";
 import ChatInput from "./chat-input";
 import { useEffect, useState } from "react";
-import useSWR from "swr";
-import { translate } from "google-translate-api-x";
 
 const Chat = () => {
   const [senderChat, setSenderChat] = useState("");
@@ -14,11 +12,6 @@ const Chat = () => {
       message: `Welcome Ngap! ketik "Kata-kata hari ini mase" kalau kamu mau semangad.`,
     },
   ]);
-
-  // const fetcher = (url) => fetch(url).then((r) => r.json());
-  // const { data } = useSWR("https://quotes-mase.vercel.app/api", fetcher, {
-  //   refreshInterval: 1000, // Setiap 1000 milidetik (1 detik)
-  // });
 
   const messageHandler = (e) => {
     setSenderChat(e.target.value);
@@ -35,8 +28,7 @@ const Chat = () => {
     //Checking if senderChat is not "kata-kata hari ini mase"
     if (senderChat.toLowerCase().trim() == "kata-kata hari ini mase") {
       // Menambahkan pesan dari data (asumsikan data[0].content tidak undefined)
-      // const translated = await translate(trn, { to: "id" });
-      // console.log(data);
+
       const res_quote = await fetch("https://api.quotable.io/quotes/random");
       const quote = await res_quote.json();
       const res_toTranslate = await fetch(
@@ -52,7 +44,6 @@ const Chat = () => {
       );
 
       const translate = await res_toTranslate.json();
-      console.log(translate);
       setChatData((prev) => [
         ...prev,
         { isSender: false, message: translate.res_translate.text },
