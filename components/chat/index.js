@@ -16,7 +16,7 @@ const Chat = () => {
   ]);
 
   const fetcher = (url) => fetch(url).then((r) => r.json());
-  const { data } = useSWR("http://localhost:3000/api", fetcher, {
+  const { data } = useSWR("https://quotes-mase.vercel.app/api", fetcher, {
     refreshInterval: 500,
   });
 
