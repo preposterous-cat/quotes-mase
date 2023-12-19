@@ -16,7 +16,9 @@ const Chat = () => {
   ]);
 
   const fetcher = (url) => fetch(url).then((r) => r.json());
-  const { data } = useSWR("https://quotes-mase.vercel.app/api", fetcher);
+  const { data } = useSWR("https://quotes-mase.vercel.app/api", fetcher, {
+    refreshInterval: 1000, // Setiap 1000 milidetik (1 detik)
+  });
 
   const messageHandler = (e) => {
     setSenderChat(e.target.value);
