@@ -2,7 +2,8 @@ import translate from "google-translate-api-x";
 
 export async function GET(request) {
   const res_quote = await fetch("https://api.quotable.io/quotes/random", {
-    cache: "no-store",
+    cache: "no-cache",
+    next: { revalidate: 500 },
   });
   const quote = await res_quote.json();
 
