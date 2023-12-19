@@ -39,14 +39,17 @@ const Chat = () => {
       // console.log(data);
       const res_quote = await fetch("https://api.quotable.io/quotes/random");
       const quote = await res_quote.json();
-      const res_toTranslate = await fetch("http://localhost:3000/api", {
-        method: "POST", // Sesuaikan dengan metode yang sesuai
-        headers: {
-          "Content-Type": "application/json",
-          // Sesuaikan header sesuai kebutuhan, misalnya Authorization
-        },
-        body: JSON.stringify(quote),
-      });
+      const res_toTranslate = await fetch(
+        "https://quotes-mase.vercel.app/api",
+        {
+          method: "POST", // Sesuaikan dengan metode yang sesuai
+          headers: {
+            "Content-Type": "application/json",
+            // Sesuaikan header sesuai kebutuhan, misalnya Authorization
+          },
+          body: JSON.stringify(quote),
+        }
+      );
 
       const translate = await res_toTranslate.json();
       console.log(translate);
