@@ -18,6 +18,8 @@ const Chat = () => {
   const fetcher = (url) => fetch(url).then((r) => r.json());
   const { data } = useSWR("https://quotes-mase.vercel.app/api", fetcher, {
     refreshInterval: 500,
+    revalidateOnMount: true,
+    revalidateOnFocus: true,
   });
 
   const messageHandler = (e) => {
