@@ -15,10 +15,10 @@ const Chat = () => {
     },
   ]);
 
-  const fetcher = (url) => fetch(url).then((r) => r.json());
-  const { data } = useSWR("https://quotes-mase.vercel.app/api", fetcher, {
-    refreshInterval: 1000, // Setiap 1000 milidetik (1 detik)
-  });
+  // const fetcher = (url) => fetch(url).then((r) => r.json());
+  // const { data } = useSWR("https://quotes-mase.vercel.app/api", fetcher, {
+  //   refreshInterval: 1000, // Setiap 1000 milidetik (1 detik)
+  // });
 
   const messageHandler = (e) => {
     setSenderChat(e.target.value);
@@ -37,9 +37,22 @@ const Chat = () => {
       // Menambahkan pesan dari data (asumsikan data[0].content tidak undefined)
       // const translated = await translate(trn, { to: "id" });
       // console.log(data);
+      const res_quote = await fetch("https://api.quotable.io/quotes/random");
+      const quote = await res_quote.json();
+      const res_toTranslate = await fetch("http://localhost:3000/api", {
+        method: "POST", // Sesuaikan dengan metode yang sesuai
+        headers: {
+          "Content-Type": "application/json",
+          // Sesuaikan header sesuai kebutuhan, misalnya Authorization
+        },
+        body: JSON.stringify(quote),
+      });
+
+      const translate = await res_toTranslate.json();
+      console.log(translate);
       setChatData((prev) => [
         ...prev,
-        { isSender: false, message: data.res_translate.text },
+        { isSender: false, message: translate.res_translate.text },
       ]);
     } else {
       setChatData((prev) => [
