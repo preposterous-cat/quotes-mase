@@ -22,9 +22,6 @@ const Chat = () => {
     // Menambahkan pesan pengirim baru
     setChatData((prev) => [...prev, { isSender: true, message: senderChat }]);
 
-    // Delay for a few seconds
-    await new Promise((resolve) => setTimeout(resolve, 1000)); // Set the delay time in milliseconds (2000 ms = 2 seconds)
-
     //Checking if senderChat is not "kata-kata hari ini mase"
     if (senderChat.toLowerCase().trim() == "kata-kata hari ini mase") {
       // Menambahkan pesan dari data (asumsikan data[0].content tidak undefined)
