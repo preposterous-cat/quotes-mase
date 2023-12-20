@@ -12,6 +12,7 @@ const Chat = () => {
       message: `Welcome Ngap! ketik "Kata-kata hari ini mase" kalau kamu mau semangad.`,
     },
   ]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const messageHandler = (e) => {
     setSenderChat(e.target.value);
@@ -20,6 +21,7 @@ const Chat = () => {
   const messageSubmitHandler = async (e) => {
     e.preventDefault();
     // Menambahkan pesan pengirim baru
+    setIsLoading(true);
     setChatData((prev) => [...prev, { isSender: true, message: senderChat }]);
 
     //Checking if senderChat is not "kata-kata hari ini mase"
@@ -28,6 +30,8 @@ const Chat = () => {
 
       const res_quote = await fetch("https://api.quotable.io/quotes/random");
       const quote = await res_quote.json();
+      //http://localhost:3000/
+      //https://quotes-mase.vercel.app/api
       const res_toTranslate = await fetch(
         "https://quotes-mase.vercel.app/api",
         {
@@ -51,7 +55,7 @@ const Chat = () => {
         { isSender: false, message: "Gak ngerti Ngap" },
       ]);
     }
-
+    setIsLoading(false);
     setSenderChat("");
   };
 
@@ -71,6 +75,17 @@ const Chat = () => {
               message={value.message}
             />
           ))}
+          {isLoading ? (
+            <motion.div
+              initial={{ opacity: 0 }} // Posisi awal di luar layar sebelah kiri
+              animate={{ opacity: 1 }} // Posisi akhir di posisi awal (x: 0)
+              transition={{ duration: 3, repeat: Infinity }}
+            >
+              <ChatBubble isSender={false} message={"Mengetik..."} />
+            </motion.div>
+          ) : (
+            ""
+          )}
         </div>
       </div>
       <ChatInput
